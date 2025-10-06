@@ -166,11 +166,13 @@ bot.onText(/\/start(?: (.+))?/, async (msg, match) => {
     if (!vac || vac.status !== "active") {
       return bot.sendMessage(chatId, "❌ Ushbu vakansiya mavjud emas yoki yopilgan.");
     }
-
-    userState[chatId] = {
-      step: "payment_phase",
-      applyingVac: vacId
-    };
+const existingUser  = await User.findOne({ chatId });
+    if (existingUser ) {
+      // Agar ro'yxatdan o'tgan bo'lsa, to'g'ridan-to'g'ri to'lov bosqichiga o't
+      userState[chatId] = {
+        step: "payment_phase",
+        applyingVac: vacId
+      };
 
     const payText = `
 📝 Ishga yozilish: ${vac.title}
@@ -192,8 +194,45 @@ Toshpulatov Shoxrux
     });
     console.log(userState[chatId]);
     return;   
+  } else {
+      userState[chatId] = {
+        pendingVac: vacId  // Vakansiya ID sini saqlab qo'yamiz, ro'yxatdan o'tgandan keyin ishlatamiz
+      };
+            const registerFirstText = `
+❌ Avval botda ro'yxatdan o'tishingiz kerak!
+📋 <b>Foydalanuvchi Ofertasi</b>
+<b>ManMode Uz</b> jamoasi tomonidan taqdim etiladigan xizmatlar uchun
+<b>1. Umumiy qoidalar</b>  
+Ushbu kanaldan foydalanish orqali siz quyidagi shartlarga rozilik bildirasiz.  
+Bizning xizmat — kunlik ishlarga nomzodlarni ish beruvchilar bilan bog'lash.
+<b>2. Xizmat haqi</b>  
+Har bir ish e'lonida xizmat haqi miqdori alohida ko'rsatiladi.  
+Nomzod ishga yozilishdan oldin ko'rsatilgan summani to'laydi va to'lov tasdig'ini (check) botga yuboradi.  
+Qalbaki check yuborish qat'iyan taqiqlanadi.
+<b>3. Majburiyatlar</b>  
+To'lovdan so'ng nomzod ishga chiqishi shart. Sababsiz chiqmaslik xizmatdan chetlashtirishga olib keladi.  
+Biz ish beruvchi va nomzod o'rtasidagi nizolarga bevosita javobgar emasmiz, lekin imkon qadar yordam beramiz.
+<b>4. Javobgarlik chegarasi</b>  
+Ish haqi, ish joyi sharoiti va boshqa qo'shimcha kelishuvlar uchun faqat ish beruvchi javobgar.  
+Bizning vazifamiz — faqat bog'lash va e'lonlarni yetkazish.
+<b>5. Yakuniy shartlar</b>  
+Oferta va qoidalar vaqti-vaqti bilan yangilanishi mumkin.  
+Kanaldan foydalanish orqali siz ushbu shartlarga rozilik bildirgan bo'lasiz.
+      `;
+      bot.sendMessage(chatId, registerFirstText, {
+        parse_mode: "HTML",
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: "✅ Roziman", callback_data: "agree" },
+              { text: "❌ Rad etaman", callback_data: "disagree" }
+            ]
+          ]
+        }
+     })
+      return;
   }
-
+  }    
   // Aks holda — mavjud start jarayoni davom etadi
   const existingUser = await User.findOne({ chatId });
   if (existingUser) {
