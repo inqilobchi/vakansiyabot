@@ -244,10 +244,6 @@ Kanaldan foydalanish orqali siz ushbu shartlarga rozilik bildirgan bo'lasiz.
 bot.onText(/\/panel/, async (msg) => {
   const chatId = msg.chat.id;
 
-  if (!ADMIN_IDS.includes(chatId)) {
-    return bot.sendMessage(chatId, "⛔ kirish huquqi yo‘q.");
-  }
-
   await bot.sendMessage(chatId, "📊 Admin panelga xush kelibsiz", {
     reply_markup: {
       inline_keyboard: [
