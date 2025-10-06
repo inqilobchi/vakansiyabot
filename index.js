@@ -370,7 +370,7 @@ if (data.startsWith("admin_confirm_pay_")) {
     : `User  ro'yxatdan o'tmagan (Chat ID: ${userChatId})`;
 
   // 1) Foydalanuvchiga xabar yubor
-  await bot.sendMessage(userChatId, `✅ To'lovingiz tasdiqlandi! Endi adminga murojaat qiling: @Admin`);
+  await bot.sendMessage(userChatId, `✅ To'lovingiz tasdiqlandi! Endi adminga murojaat qiling: @ManMode_admin1`);
 
   // 2) Adminga xabar yubor
   await bot.sendMessage(chatId,
