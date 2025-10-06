@@ -243,7 +243,9 @@ Kanaldan foydalanish orqali siz ushbu shartlarga rozilik bildirgan bo'lasiz.
 // ====== /panel komandasi — Faqat adminlar uchun ======
 bot.onText(/\/panel/, async (msg) => {
   const chatId = msg.chat.id;
-
+  if (!ADMIN_IDS.includes(chatId)) {
+    return bot.sendMessage(chatId, "⛔ Noma'lum buyruq.");
+  }
   await bot.sendMessage(chatId, "📊 Admin panelga xush kelibsiz", {
     reply_markup: {
       inline_keyboard: [
