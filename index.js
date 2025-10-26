@@ -180,8 +180,7 @@ const existingUser  = await User.findOne({ chatId });
 💰 Ish haqqi: ${vac.salary} 
 🌟 Xizmat haqi: ${vac.serviceFee} 
 
-💳 9860 1601 1896 8066  
-Toshpulatov Shoxrux 
+💳 9860 1201 6718 6416
 
 💳 Ushbu karta raqamga ${vac.serviceFee} to‘lov qilib checkini yuboring (3 daqiqa ichida):
     `;
@@ -621,8 +620,7 @@ Kanaldan foydalanish orqali siz ushbu shartlarga rozilik bildirgan bo'lasiz.
 💰 Ish haqqi: ${vac.salary}
 🌟 Xizmat haqi: ${vac.serviceFee}
 
-💳 9860 1601 1896 8066  
-Toshpulatov Shoxrux  
+💳 9860 1201 6718 6416 
 
 💳 Ushbu karta raqamga ${vac.serviceFee} so‘mlik to‘lov checkini yuboring (3 daqiqa ichida):
 `;
