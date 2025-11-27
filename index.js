@@ -200,24 +200,33 @@ const existingUser  = await User.findOne({ chatId });
             const registerFirstText = `
 ❌ Avval botda ro'yxatdan o'tishingiz kerak!
 📋 <b>Foydalanuvchi Ofertasi</b>
-<b>ManMode Uz</b> jamoasi tomonidan taqdim etiladigan xizmatlar uchun
-<b>1. Umumiy qoidalar</b>  
-Ushbu kanaldan foydalanish orqali siz quyidagi shartlarga rozilik bildirasiz.  
+
+ManMode Uz jamoasi tomonidan taqdim etiladigan xizmatlar uchun
+
+<b>1. Umumiy qoidalar</b><br>
+Ushbu kanaldan foydalanish orqali siz quyidagi shartlarga rozilik bildirasiz.<br>
 Bizning xizmat — kunlik ishlarga nomzodlarni ish beruvchilar bilan bog'lash.
-<b>2. Xizmat haqi</b>  
-Har bir ish e'lonida xizmat haqi miqdori alohida ko'rsatiladi.  
-Nomzod ishga yozilishdan oldin ko'rsatilgan summani to'laydi va to'lov tasdig'ini (check) botga yuboradi.  
+
+<b>2. Xizmat haqi</b><br>
+Har bir ish e'lonida xizmat haqi miqdori alohida ko'rsatiladi.<br>
+Nomzod ishga yozilishdan oldin ko'rsatilgan summani to'laydi va to'lov tasdig'ini (check) botga yuboradi.<br>
 Qalbaki check yuborish qat'iyan taqiqlanadi.
-<b>3. Majburiyatlar</b>  
-To'lovdan so'ng nomzod ishga chiqishi shart. Sababsiz chiqmaslik xizmatdan chetlashtirishga olib keladi.  
+
+<b>3. Majburiyatlar</b><br>
+To'lovdan so'ng nomzod ishga chiqishi shart. Sababsiz chiqmaslik xizmatdan chetlashtirishga olib keladi.<br>
 Biz ish beruvchi va nomzod o'rtasidagi nizolarga bevosita javobgar emasmiz, lekin imkon qadar yordam beramiz.
-<b>4. Javobgarlik chegarasi</b>  
-Ish haqi, ish joyi sharoiti va boshqa qo'shimcha kelishuvlar uchun faqat ish beruvchi javobgar.  
+
+<b>4. Javobgarlik chegarasi</b><br>
+Ish haqi, ish joyi sharoiti va boshqa qo'shimcha kelishuvlar uchun faqat ish beruvchi javobgar.<br>
 Bizning vazifamiz — faqat bog'lash va e'lonlarni yetkazish.
-<b>5. Yakuniy shartlar</b>  
-Oferta va qoidalar vaqti-vaqti bilan yangilanishi mumkin.  
+
+<b>5. To'lovni qaytarish</b><br>
+Agar ish bekor qilinsa, pulingiz qaytarib beriladi — <b>faqatgina shanba va yakshanba kunlari</b>.
+
+<b>6. Yakuniy shartlar</b><br>
+Oferta va qoidalar vaqti-vaqti bilan yangilanishi mumkin.<br>
 Kanaldan foydalanish orqali siz ushbu shartlarga rozilik bildirgan bo'lasiz.
-      `;
+`;
       bot.sendMessage(chatId, registerFirstText, {
         parse_mode: "HTML",
         reply_markup: {
@@ -241,29 +250,33 @@ Kanaldan foydalanish orqali siz ushbu shartlarga rozilik bildirgan bo'lasiz.
 const contractText = `
 📋 <b>Foydalanuvchi Ofertasi</b>
 
-<b>ManMode Uz</b> jamoasi tomonidan taqdim etiladigan xizmatlar uchun
+ManMode Uz jamoasi tomonidan taqdim etiladigan xizmatlar uchun
 
-<b>1. Umumiy qoidalar</b>  
-Ushbu kanaldan foydalanish orqali siz quyidagi shartlarga rozilik bildirasiz.  
+<b>1. Umumiy qoidalar</b><br>
+Ushbu kanaldan foydalanish orqali siz quyidagi shartlarga rozilik bildirasiz.<br>
 Bizning xizmat — kunlik ishlarga nomzodlarni ish beruvchilar bilan bog'lash.
 
-<b>2. Xizmat haqi</b>  
-Har bir ish e'lonida xizmat haqi miqdori alohida ko'rsatiladi.  
-Nomzod ishga yozilishdan oldin ko'rsatilgan summani to'laydi va to'lov tasdig'ini (check) botga yuboradi.  
+<b>2. Xizmat haqi</b><br>
+Har bir ish e'lonida xizmat haqi miqdori alohida ko'rsatiladi.<br>
+Nomzod ishga yozilishdan oldin ko'rsatilgan summani to'laydi va to'lov tasdig'ini (check) botga yuboradi.<br>
 Qalbaki check yuborish qat'iyan taqiqlanadi.
 
-<b>3. Majburiyatlar</b>  
-To'lovdan so'ng nomzod ishga chiqishi shart. Sababsiz chiqmaslik xizmatdan chetlashtirishga olib keladi.  
+<b>3. Majburiyatlar</b><br>
+To'lovdan so'ng nomzod ishga chiqishi shart. Sababsiz chiqmaslik xizmatdan chetlashtirishga olib keladi.<br>
 Biz ish beruvchi va nomzod o'rtasidagi nizolarga bevosita javobgar emasmiz, lekin imkon qadar yordam beramiz.
 
-<b>4. Javobgarlik chegarasi</b>  
-Ish haqi, ish joyi sharoiti va boshqa qo'shimcha kelishuvlar uchun faqat ish beruvchi javobgar.  
+<b>4. Javobgarlik chegarasi</b><br>
+Ish haqi, ish joyi sharoiti va boshqa qo'shimcha kelishuvlar uchun faqat ish beruvchi javobgar.<br>
 Bizning vazifamiz — faqat bog'lash va e'lonlarni yetkazish.
 
-<b>5. Yakuniy shartlar</b>  
-Oferta va qoidalar vaqti-vaqti bilan yangilanishi mumkin.  
+<b>5. To'lovni qaytarish</b><br>
+Agar ish bekor qilinsa, pulingiz qaytarib beriladi — <b>faqatgina shanba va yakshanba kunlari</b>.
+
+<b>6. Yakuniy shartlar</b><br>
+Oferta va qoidalar vaqti-vaqti bilan yangilanishi mumkin.<br>
 Kanaldan foydalanish orqali siz ushbu shartlarga rozilik bildirgan bo'lasiz.
 `;
+
 
   bot.sendMessage(chatId, contractText, {
     parse_mode: "HTML",
