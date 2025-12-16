@@ -1006,13 +1006,13 @@ case "📋 Mening arizalarim":
       await bot.sendMessage(chatId, `
 📞 <b>Qo'llab-quvvatlash xizmati</b>:
 
-🔢 Telefon raqam: <b>+998 (93) 497 05 84</b>
+🔢 Telefon raqam: <b>+998 77-999-14-64</b>
 
-⏰ Ish vaqti: 09:00 - 22:00  
+⏰ Ish vaqti: 09:00 - 23:00  
 📅 Ish kunlari: Dushanba - Yakshanba
 
 ❓ Savollar bo'lsa, yuqoridagi raqamga qo'ng'iroq qiling.
-📱 Yoki @ManMode_admin1 ga yozing.  
+📱 Yoki @Mode_Menejer ga yozing.  
       `, {
         parse_mode: "HTML",
         reply_markup: {
