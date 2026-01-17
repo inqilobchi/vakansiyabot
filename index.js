@@ -83,6 +83,8 @@ const userSchema = new mongoose.Schema({
   phone: String,
   age: Number,
   weight: Number,
+  isBlocked: { type: Boolean, default: false },
+  blockReason: { type: String, default: "" },
   createdAt: { type: Date, default: Date.now }
 });
 const User = mongoose.model('User', userSchema);
@@ -315,7 +317,14 @@ bot.onText(/\/panel/, async (msg) => {
 bot.on("callback_query", async (query) => {
   const chatId = query.message.chat.id;
   const data = query.data;
-
+  const userDB = await User.findOne({ chatId });
+if (userDB?.isBlocked && !ADMIN_IDS.includes(chatId)) {
+  await bot.answerCallbackQuery(query.id, {
+    text: "Siz bloklangansiz",
+    show_alert: true
+  });
+  return;
+}
   // Agar admin panel callback’lari bo‘lsa
   if (ADMIN_IDS.includes(chatId)) {
     // Adminga tegishli callback’larni boshqarish
@@ -421,7 +430,13 @@ if (data.startsWith("admin_confirm_pay_")) {
     : `User  ro'yxatdan o'tmagan (Chat ID: ${userChatId})`;
 
   // 1) Foydalanuvchiga xabar yubor
-  await bot.sendMessage(userChatId, `✅ To'lovingiz tasdiqlandi! Endi adminga murojaat qiling: @ManMode_admin1`);
+  await bot.sendMessage(userChatId, `
+✅ <b>To'lovingiz tasdiqlandi!</b>
+
+📞 Keyingi bosqich uchun:
+👉 @Mode_Menejer ga yozing
+`, { parse_mode: "HTML" });
+
 
   // 2) Adminga xabar yubor
   await bot.sendMessage(chatId,
@@ -508,8 +523,25 @@ if (data.startsWith("admin_confirm_pay_")) {
           else if (data.startsWith("admin_cancel_pay_")) {
             const parts = data.split("_");
             const userChatId = parseInt(parts[3]);
-            await bot.sendMessage(userChatId, "❌ To‘lovingiz bekor qilindi.");
-            await bot.answerCallbackQuery(query.id, { text: "To‘lov bekor qilindi." });
+            await User.findOneAndUpdate(
+                { chatId: userChatId },
+            {
+                isBlocked: true,
+                blockReason: "Feyk chek yuborganingiz uchun."
+            }
+          );
+
+
+            await bot.sendMessage(userChatId, `
+            🔴 <b>Siz qizilga olindingiz</b> va balansingiz muzlatildi.
+
+            <b>Sabab:</b> Feyk chek yuborganingiz uchun.
+
+            <b>Qizildan chiqish uchun:</b>
+            📩 @Mode_Menejer ga murojaat qiling.
+            `, { parse_mode: "HTML" });
+
+            await bot.answerCallbackQuery(query.id, { text: "Foydalanuvchi bloklandi." });
           }
         }
         break;
@@ -642,10 +674,42 @@ Kanaldan foydalanish orqali siz ushbu shartlarga rozilik bildirgan bo'lasiz.
       break;
   }
 });
+bot.onText(/\/check_(\d+)/, async (msg, match) => {
+  const adminId = msg.chat.id;
+  if (!ADMIN_IDS.includes(adminId)) return;
+
+  const userChatId = parseInt(match[1]);
+
+  const user = await User.findOne({ chatId: userChatId });
+  if (!user) {
+    return bot.sendMessage(adminId, "❌ Foydalanuvchi topilmadi.");
+  }
+
+  user.isBlocked = false;
+  user.blockReason = "";
+  await user.save();
+
+  await bot.sendMessage(adminId, `✅ ${user.fullName} blokdan chiqarildi.`);
+  await bot.sendMessage(userChatId, `
+✅ <b>Siz blokdan chiqarildingiz!</b>
+
+Botdan yana foydalanishingiz mumkin.
+  `, { parse_mode: "HTML" });
+});
 
 // ====== Xabarlar (matn, telefon, rasmlar) ======
 bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
+  const userDB = await User.findOne({ chatId });
+  if (userDB?.isBlocked) {
+  return bot.sendMessage(chatId, `
+🔴 <b>Siz bloklangansiz!</b>
+
+<b>Sabab:</b> ${userDB.blockReason}
+
+📩 Qayta ochish uchun: @Mode_Menejer
+  `, { parse_mode: "HTML" });
+}
   const state = userState[chatId];
   console.log("==== message kirib keldi ====");
   console.log("chatId:", chatId);
